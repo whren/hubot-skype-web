@@ -139,10 +139,12 @@ class SkypeWebAdapter extends Adapter
           'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 ' +
           '(KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.36'
         # Login to skype web
+        self.robot.logger.debug 'Opening skype web URL'
         page.open 'https://web.skype.com', (status) ->
           setTimeout (->
             page.evaluate ((username, password) ->
               try
+                self.robot.logger.debug 'Signin with username: ' + username + ', password: ' + password
                 document.getElementById('username').value = username
                 document.getElementById('password').value = password
                 document.getElementById('signIn').click()
@@ -152,7 +154,7 @@ class SkypeWebAdapter extends Adapter
                                 'Please resolve the captcha manually and '     +
                                 'make sure you use correct credentials.'
             ), (->), self.username, self.password
-          ), 5000  # after 5 secs
+          ), 10000  # after 10 secs
 
     ), phantomOptions
 
