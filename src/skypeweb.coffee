@@ -141,12 +141,11 @@ class SkypeWebAdapter extends Adapter
         # Login to skype web
         self.robot.logger.debug 'Opening skype web URL'
         page.open 'https://web.skype.com', (status) ->
-          self.robot.logger.debug 'Page opened'
+          self.robot.logger.debug 'Page opened : ' + status
           setTimeout (->
-            page.evaluate ((username, password) ->
-              self = @
+            page.evaluate ((username, password, logger) ->
               try
-                self.robot.logger.debug 'Signin with username: ' + username + ', password: ' + password
+                logger.debug 'Signin with username: ' + username + ', password: ' + password
                 document.getElementById('username').value = username
                 document.getElementById('password').value = password
                 document.getElementById('signIn').click()
@@ -155,7 +154,7 @@ class SkypeWebAdapter extends Adapter
                 throw new Error 'Captcha detected at the Skype login screen. ' +
                                 'Please resolve the captcha manually and '     +
                                 'make sure you use correct credentials.'
-            ), (->), self.username, self.password
+            ), (->), self.username, self.password, self.robot.logger
           ), 10000  # after 10 secs
 
     ), phantomOptions
