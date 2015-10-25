@@ -141,8 +141,10 @@ class SkypeWebAdapter extends Adapter
         # Login to skype web
         self.robot.logger.debug 'Opening skype web URL'
         page.open 'https://web.skype.com', (status) ->
+          self.robot.logger.debug 'Page opened'
           setTimeout (->
             page.evaluate ((username, password) ->
+              self = @
               try
                 self.robot.logger.debug 'Signin with username: ' + username + ', password: ' + password
                 document.getElementById('username').value = username
