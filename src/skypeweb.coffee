@@ -142,7 +142,7 @@ class SkypeWebAdapter extends Adapter
         self.robot.logger.debug 'Opening skype web URL'
         page.open 'https://web.skype.com', (status) ->
           self.robot.logger.debug 'Page opened : ' + status
-          self.robot.logger.debug 'Class : ' + self
+          self.robot.logger.debug 'username : ' + self.username + ', password : ' + self.password
           setTimeout (->
             page.evaluate ((username, password) ->
               try
